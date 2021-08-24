@@ -1,11 +1,11 @@
-package com.xll.stream;
+package com.xll.model.po;
 
 import lombok.Data;
 
 /**
  * @Author: xll
- * @Date: 2021/08/17/14:18
- * @Description: 实体Person
+ * @Date: 2021/08/24/14:50
+ * @Description:
  */
 @Data
 public class Person {
@@ -22,3 +22,4 @@ public class Person {
     }
 
 }
+

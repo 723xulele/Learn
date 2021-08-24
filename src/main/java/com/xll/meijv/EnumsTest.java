@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
  * @Date: 2021/08/23/9:20
  * @Description:
  */
-public class testEnums {
+public class EnumsTest {
 
     @Test
     public void getEnums(){

@@ -1,4 +1,4 @@
-package com.xll.tesk;
+package com.xll.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @EnableScheduling
-public class TeskTask {
+public class TaskTest {
 
     @Scheduled(cron = "0 0/2 * * * ?") //每两分钟执行一次
     public void testTask(){
