@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 public class TaskTest {
 
-    @Scheduled(cron = "0 0/2 * * * ?") //每两分钟执行一次
+    @Scheduled(cron = "0 0 * * * ?") //每两分钟执行一次
     public void testTask(){
         log.info("定时任务开始执行");
         System.out.println(new DateTime() + "定时任务执行");
