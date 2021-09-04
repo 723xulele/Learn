@@ -1,11 +1,17 @@
 package com.xll.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xll
@@ -13,9 +19,14 @@ import java.net.UnknownHostException;
  * @Description:
  */
 @RestController
+@Slf4j
 public class TestGetIp {
 
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+//    @Resource
+//    private Redisson redisson;
     @GetMapping("getIpAddr")
     public String getIpAddr(HttpServletRequest request){
         String ipAddress = request.getHeader("x-forwarded-for");
@@ -47,4 +58,36 @@ public class TestGetIp {
         return ipAddress;
     }
 
+//    @GetMapping("/tryLock")
+//    public String tryLock() {
+//        int total = Integer.parseInt(stringRedisTemplate.opsForValue().get("total"));
+//        if (total > 0) {
+//            total -= 1;
+//            stringRedisTemplate.opsForValue().set("total",String.valueOf(total));
+//            log.info("扣减成功, 剩余: " + total);
+//        } else {
+//            log.info("扣减失败, 剩余不足");
+//        }
+//        return "完成";
+//    }
+
+//    @GetMapping("/tryLock")
+//    public String tryLock() {
+//        String lockKey = "xll";
+//        RLock rLock =   redisson.getLock(lockKey);
+//        try {
+//            rLock.lock(30, TimeUnit.SECONDS);
+//            int total = Integer.parseInt(stringRedisTemplate.opsForValue().get("total"));
+//            if (total > 0) {
+//                total -= 1;
+//                stringRedisTemplate.opsForValue().set("total",String.valueOf(total));
+//                log.info("扣减成功, 剩余: " + total);
+//            } else {
+//                log.info("扣减失败, 剩余不足");
+//            }
+//        } finally {
+//            rLock.unlock();
+//        }
+//        return "完成";
+//    }
 }
