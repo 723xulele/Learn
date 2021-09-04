@@ -1,12 +1,11 @@
 package com.xll.list;
 
+import com.google.common.collect.Lists;
 import com.xll.model.po.Person;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -27,6 +26,18 @@ public class ListTest {
         personList.add(new Person("小李", 30));
         return personList;
     }
+
+    @Test
+    public void test() {
+        List<Person> personList = personList();
+        try {
+            Map<String, List<Person>> map = personList.stream().collect(Collectors.groupingBy(Person::getName));
+            System.out.println(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 集合去重,泛型是对象
@@ -76,4 +87,16 @@ public class ListTest {
         System.out.println(list);
     }
 
+    /**
+     * Lists.newArrayList()的用法
+     * Arrays.asList()的用法
+     */
+    @Test
+    public void testLists(){
+        ArrayList<Integer> integers = Lists.newArrayList(2, 3);
+        List<Integer> integers1 = Arrays.asList(2, 3);
+        System.out.println(integers);
+        System.out.println(integers1);
+        System.out.println(integers1 == integers);
+    }
 }
