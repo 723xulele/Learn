@@ -1,9 +1,36 @@
 server:
   port: 8080
+  servlet:
+    context-path: /Learn
 
 spring:
   datasource:
-    username: root
-    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/Test?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+system:
+  addr: http://localhost/Internet-advert-web/
+  swagger:
+    enable: true
+mybatis:
+  type-aliases-package: com.xll.model.po
+  mapper-locations: classpath:mapper/*Dao.xml
+#lkad:
+#  #要扫描接口的包路径，多个用","号隔开，指定父包可以扫描所有父包下的子包（必配）
+#  basePackages: com.xll.controller
+#  #项目名称（选配）
+#  projectName: 许乐乐练习专用
+#  #项目描述（选配）
+#  description: 白茶清欢无别事,我在等风也等你
+#  #要聚合的项目地址，"-"前面是项目名称（可省略），后面是项目的地址（也可以用域名），多个用","号隔开，用来聚合其它项目的接口信息，可以在UI界面切换（选配）
+#  serverNames: 租房系统-192.168.0.77:9010,缴费系统-192.168.0.77:8888
+#  #项目的版本号（选配）
+#  version: 1.0
+#  #接口文档启动开关,true是开启，false是禁用,默认为开启，此开关对数据校验没有影响（选配）
+#  enabled: true
+#  #password:设置查看接口文档所需的密码，默认不需要密码【可选】
+#  #password: 123456
+#  #sconAll:是否开启对未加注解描述的参数进行自动识别，默认为false【可选】
+#  sconAll: false

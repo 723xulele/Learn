@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @Slf4j
-public class TestGetIp {
+public class TestGetIpController {
 
 
     @Resource

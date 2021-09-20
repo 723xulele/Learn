@@ -20,6 +20,8 @@ application-dev.yml
 *.iws
 *.iml
 *.ipr
+file
+image
 
 ### NetBeans ###
 /nbproject/private/

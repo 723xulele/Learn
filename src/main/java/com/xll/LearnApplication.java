@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @Date: 2021/08/26/16:22
  * @Description:
  */
+
 @SpringBootApplication(scanBasePackages = "com.xll")
 public class LearnApplication {
     public static void main(String[] args) {

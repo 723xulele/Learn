@@ -6,4 +6,10 @@ package com.xll.string;
  * @Description:
  */
 public class StringTest {
+
+    public static void main(String[] args) {
+        String str = " dlkaskk j ";
+        System.out.println(str.replace(" ","").length());
+        System.out.println(str.replaceAll(" ","").length());
+    }
 }

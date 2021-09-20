@@ -2,6 +2,7 @@ package com.xll.list;
 
 import com.google.common.collect.Lists;
 import com.xll.model.po.Person;
+import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -98,5 +99,7 @@ public class ListTest {
         System.out.println(integers);
         System.out.println(integers1);
         System.out.println(integers1 == integers);
+        System.out.println(String.format("yyyy-mm-dd",new DateTime().plusMinutes(20)));
     }
+
 }
