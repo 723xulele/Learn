@@ -26,13 +26,13 @@ public class test {
         s.setBirthday(new Date());
         s.setId(1);
         s.setSex("sex");
-        s.setUser_name("user_name");
+        s.setUserName("user_name");
         Map<String,Object> map = new HashMap<>();
         map.put("address",s.getAddress());
         map.put("birthday",s.getBirthday());
         map.put("id",s.getId());
         map.put("sex",s.getSex());
-        map.put("user_name",s.getUser_name());
+        map.put("user_name",s.getUserName());
         System.out.println(JSON.toJSONString(map));
         System.out.println(JSONObject.toJSONString(s));
     }

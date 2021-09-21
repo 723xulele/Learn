@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 
-public class generator {
+public class MyBatisPlusGenerator {
 
     public static void main(String[] args) {
         //数据源地址
@@ -90,8 +90,8 @@ public class generator {
         pc.setMapper("mapper");*/
         pc.setEntity("model.po");
         Map<String, String> packageInfo = new HashMap<>();
-        packageInfo.put(ConstVal.SERVICE, ".com.xll.services");
-        packageInfo.put(ConstVal.SERVICE_IMPL, ".com.xll.services.impl");
+        packageInfo.put("Base" + ConstVal.SERVICE, ".com.xll.services");
+        packageInfo.put("Base" + ConstVal.SERVICE_IMPL, ".com.xll.services.impl");
         packageInfo.put(ConstVal.ENTITY, ".com.xll.model.po");
         packageInfo.put(ConstVal.MAPPER, ".com.xll.mapper");
         Map pathInfo = new HashMap<>();
