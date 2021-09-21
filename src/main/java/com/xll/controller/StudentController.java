@@ -1,6 +1,5 @@
 package com.xll.controller;
 
-import com.xll.model.dto.StudentDto;
 import com.xll.model.po.Student;
 import com.xll.service.StudentService;
 import io.swagger.annotations.Api;
@@ -31,7 +30,7 @@ public class StudentController {
 
     @PostMapping("/addStudent")
     @ApiOperation(value = "新增学生接口")
-    public void addStudent(@RequestBody(required = false) Student student) {
+    public void addStudent(@RequestBody(required = true) Student student) {
        studentService.addStudent(student);
     }
 
