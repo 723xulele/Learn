@@ -259,5 +259,18 @@ public class StreamTest {
         /**15 */
     }
 
+    /**
+     *filter和foreach
+     */
+
+    @Test
+    public void test5() {
+        List<Person> list = StreamTest.personList();
+        list=list.subList(0,2);
+        list.stream().filter((s) -> s.getName().length() > 1)
+                .forEach((s) -> s.setName(s.getName().substring(0, 1) + "..."));
+        System.out.println(list);
+    }
+
 }
 

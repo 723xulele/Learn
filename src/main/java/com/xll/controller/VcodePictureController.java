@@ -46,7 +46,6 @@ public class VcodePictureController {
 //        response.setDateHeader("Expires", 0);
         VcodePictureUtil instance = new VcodePictureUtil();
         instance.write(response.getOutputStream());
-        System.out.println(instance.getCode());
-        redisTemplate.opsForValue().set(ranStr,instance.getCode(),60, TimeUnit.SECONDS);
+//        redisTemplate.opsForValue().set(ranStr,instance.getCode(),60, TimeUnit.SECONDS);
     }
 }
