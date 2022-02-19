@@ -1,9 +1,17 @@
 package com.xll.stream;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.xll.model.po.Person;
+import com.xll.model.po.Warn;
+import com.xll.utils.DateUtil;
 import org.testng.annotations.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -17,12 +25,12 @@ public class StreamTest {
 
     public static  List<Person> personList(){
         List<Person> list = new ArrayList<>();
-        list.add(new Person("小明",20));
-        list.add(new Person("小明",20));
-        list.add(new Person("小红",15));
-        list.add(new Person("小李",25));
-        list.add(new Person("小陈",30));
-        list.add(new Person("小王",25));
+        list.add(new Person("小明",20, DateUtil.deleteDate(new Date(),0L)));
+        list.add(new Person("小明",20,DateUtil.deleteDate(new Date(),2L)));
+        list.add(new Person("小红",15,DateUtil.deleteDate(new Date(),3L)));
+        list.add(new Person("小李",25,DateUtil.deleteDate(new Date(),4L)));
+        list.add(new Person("小陈",30,DateUtil.deleteDate(new Date(),5L)));
+        list.add(new Person("小王",25,DateUtil.deleteDate(new Date(),6L)));
         return list;
     }
 
@@ -33,18 +41,26 @@ public class StreamTest {
         Stream<Person> stream = list.stream();
         System.out.println(stream);
     }
-
+    private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 
     /**collect(toList()) 可以把流转换为 List 类型 */
     @Test
     public void testFilter(){
         List<Person> list = StreamTest.personList();
-        List<Person> collect = list.stream().filter(person -> person.getAge() == 25).collect(toList());
-        System.out.println(collect);
-        /**[Person(name=小李, age=25), Person(name=小王, age=25)] */
-        List<Person> collect1 = list.stream().filter(person -> person.getAge() >= 25).collect(toList());
-        System.out.println(collect1);
-        /**[Person(name=小李, age=25), Person(name=小陈, age=30), Person(name=小王, age=25)]*/
+        System.out.println(list);
+        List<Person> collect2 = list.stream().filter(distinctByKey(Person::getName)).collect(toList());
+        System.out.println(collect2);
+//        List<Person> collect3 = collect2.stream().filter(distinctByKey(Person::getAge)).collect(toList());
+//        System.out.println(collect3);
+//        List<Person> collect = list.stream().filter(person -> person.getAge() == 25).collect(toList());
+//        System.out.println(collect);
+//        /**[Person(name=小李, age=25), Person(name=小王, age=25)] */
+//        List<Person> collect1 = list.stream().filter(person -> person.getAge() >= 25).collect(toList());
+//        System.out.println(collect1);
+//        /**[Person(name=小李, age=25), Person(name=小陈, age=30), Person(name=小王, age=25)]*/
     }
 
 
@@ -69,6 +85,7 @@ public class StreamTest {
         List<Person> list = StreamTest.personList();
         List<Person> collect = list.stream().sorted((p1, p2) -> p2.getAge() - p1.getAge()).collect(toList());
         System.out.println(collect);
+
         /**[Person(name=小陈, age=30), Person(name=小李, age=25), Person(name=小王, age=25), Person(name=小明, age=20), Person(name=小明, age=20), Person(name=小红, age=15)] */
         List<Person> collect1 = list.stream().sorted(Comparator.comparingInt(Person::getAge)).collect(toList());
         System.out.println(collect1);
@@ -114,10 +131,11 @@ public class StreamTest {
     @Test
     public void testMapTR(){
         List<Person> list = StreamTest.personList();
-        List<Integer> collectAge = list.stream().map(Person::getAge).collect(toList());
+        System.out.println(list.stream().distinct().collect(toList()));
+        List<Integer> collectAge = list.stream().map(Person::getAge).distinct().collect(toList());
         System.out.println(collectAge);
         /**[20, 20, 15, 25, 30, 25] */
-        List<String> collectName = list.stream().map(Person::getName).collect(toList());
+        List<String> collectName = list.stream().map(Person::getName).distinct().collect(toList());
         System.out.println(collectName);
         /**[小明, 小明, 小红, 小李, 小陈, 小王] */
     }
@@ -222,7 +240,7 @@ public class StreamTest {
         long count = list.stream().count();
         System.out.println(count);
         /**6 */
-        long count1 = list.stream().filter(p -> p.getAge() > 20).count();
+        long count1 = list.stream().filter(p -> p.getAge() >= 20).count();
         System.out.println(count1);
         /**3 */
     }
@@ -270,6 +288,48 @@ public class StreamTest {
         list.stream().filter((s) -> s.getName().length() > 1)
                 .forEach((s) -> s.setName(s.getName().substring(0, 1) + "..."));
         System.out.println(list);
+    }
+
+    /**
+     * Collectors.joining() 的用法
+     */
+    @Test
+    public void testCollectors() {
+        List<Person> list = StreamTest.personList();
+        String collectName = list.stream().map(Person::getName).collect(Collectors.joining(","));
+        System.out.println(collectName);
+        if (list.size() > 2) {
+            list  = list.subList(0,2);
+        }
+        String str = "dasd dadasda dasd";
+        System.out.println(str.length()>9);
+        list.stream().filter((P) -> P.getAge() > 20)
+                        .forEach((P) -> P.setName(P.getName().substring(0,1) + "..."));
+        System.out.println(list);
+    }
+
+    @Test
+    public void test232312() {
+        String string = null;
+        String[] stringSourceList = null;
+        for (String s : stringSourceList) {
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    public void test23231221321() {
+        String string = "[{\"contentId\":1,\"warnContent\":\"撞墙检测\"},{\"contentId\":2,\"warnContent\":\"早恋检测\"}]";
+        List<Warn> warns = (List<Warn>) JSONArray.parseArray(string, Warn.class);
+        for (Warn w : warns) {
+            System.out.println(w.getWarnContent());
+        }
+        String string1 = "{\"contentId\":1,\"warnContent\":\"撞墙检测\"}";
+        Warn warn = JSONObject.parseObject(string1, Warn.class);
+        System.out.println(warn.getWarnContent());
+        new ArrayList<>();
+
+
     }
 
 }

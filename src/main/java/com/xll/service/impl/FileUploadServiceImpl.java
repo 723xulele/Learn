@@ -1,14 +1,22 @@
 package com.xll.service.impl;
 
 import com.xll.service.FileUploadService;
+import com.xll.utils.RegexUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.IOUtils;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -20,7 +28,7 @@ import java.io.IOException;
 public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile) throws IOException {
 
         String fileSuffix = fileSuffix(multipartFile);
         if (!(fileSuffix.equals("txt") || (fileSuffix.equals("png"))) ) {
@@ -32,7 +40,12 @@ public class FileUploadServiceImpl implements FileUploadService {
             log.error("上传文件为空");
             return "error";
         }
+        System.out.println(multipartFile.getOriginalFilename());
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()));
 
+        List<String> collect = bufferedReader.lines().filter(mobile -> RegexUtil.validateMobile(mobile) == true).collect(toList());
+        System.out.println(collect.size());
+        System.out.println(collect);
         //如果文件不为空，写入上传路径
         if (!multipartFile.isEmpty()) {
 
@@ -73,6 +86,50 @@ public class FileUploadServiceImpl implements FileUploadService {
             return "error";
         }
     }
+
+    @Override
+    public void testFile() throws IOException {
+        String path = System.getProperty("user.dir");
+        List<String> list = new ArrayList<>();
+        list.add("111");
+        list.add("222");
+        FileWriter fw = null;
+        File file = new File(path, "hello.txt");
+        //判断路径是否存在，如果不存在就创建一个
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        FileInputStream input = new FileInputStream(file);
+        MultipartFile multipartFile =new MockMultipartFile("file", file.getName(), "text/plain", IOUtils.toByteArray(input));
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(multipartFile.getInputStream()));
+        List<String> collect = bufferedReader.lines().collect(toList());
+        System.out.println(multipartFile.getOriginalFilename());
+        System.out.println(collect);
+        System.out.println(collect.size());
+        try {
+            //2.提供FileWriter的对象，用于数据的写出
+            //FileWriter(file,append)第二个参数，append是true则在后面添加，是false就覆盖
+            fw = new FileWriter(file,true);
+            for (String s : list) {
+                fw.write(s.concat("\n"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(fw!=null)
+                    //4.流资源的关闭
+                    fw.close();
+                System.out.println(file.delete());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
     // 获取当前项目的路径
     public String fileDir() {

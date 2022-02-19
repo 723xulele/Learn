@@ -1,7 +1,10 @@
 package com.xll.list;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.google.common.collect.Lists;
 import com.xll.model.po.Person;
+import com.xll.utils.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 
@@ -20,11 +23,11 @@ public class ListTest {
 
     public static List<Person> personList() {
         List<Person> personList = new ArrayList<>();
-        personList.add(new Person("小红", 20));
-        personList.add(new Person("小红", 20));
-        personList.add(new Person("小明", 25));
-        personList.add(new Person("小明", 28));
-        personList.add(new Person("小李", 30));
+        personList.add(new Person("小红", 20, DateUtil.deleteDate(new Date(),1L)));
+        personList.add(new Person("小红", 20,DateUtil.deleteDate(new Date(),5L)));
+        personList.add(new Person("小明", 25,DateUtil.deleteDate(new Date(),3L)));
+        personList.add(new Person("小明", 28,DateUtil.deleteDate(new Date(),5L)));
+        personList.add(new Person("小李", 30,DateUtil.deleteDate(new Date(),9L)));
         return personList;
     }
 
@@ -37,6 +40,16 @@ public class ListTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test222() {
+        List<Person> personList = personList();
+        String string = "";
+        for (Person person : personList) {
+            string += StringUtils.join(person.getName(),",");
+        }
+        System.out.println(string);
     }
 
 
@@ -57,7 +70,7 @@ public class ListTest {
     @Test
     public void testDistinctAge() {
         List<Person> personList = this.personList();
-        List<Person> collect = personList.stream().filter(person -> person.getAge() <= 20).collect(toList());
+        List<Person> collect = personList.stream().filter(person -> person.getAge() <= 20 ).collect(toList());
         System.out.println(collect);
     }
 
@@ -100,6 +113,39 @@ public class ListTest {
         System.out.println(integers1);
         System.out.println(integers1 == integers);
         System.out.println(String.format("yyyy-mm-dd",new DateTime().plusMinutes(20)));
+        List<Person> personList = this.personList();
+        String str = "";
+        for (Person person : personList) {
+            str = str + StringUtils.join(person.getName(),",");
+        }
+        System.out.println(str);
+        String collect = personList.stream().map(Person::getName).collect(Collectors.joining(","));
+        System.out.println(collect);;
+        personList().stream().forEach((P) -> StringUtils.join(P.getAge(), ","));
+        personList.stream().forEach((P) -> StringUtils.join(P.getAge(),","));
+
     }
+
+    @Test
+    public void testLists11(){
+        ArrayList<Integer> integers = Lists.newArrayList(1,2,2, 3,4,5);
+        for (Iterator<Integer> it = integers.iterator(); it.hasNext(); ) {
+            Integer next = it.next();
+            if (next == 1) {
+               it.remove();
+               continue;
+           }
+           if (next == 2) {
+               it.remove();
+               continue;
+           }
+        }
+        System.out.println(integers);
+        Integer a = 9;
+        Integer b = 5;
+        Integer c = 5;
+        System.out.println(a <= b+c);
+    }
+
 
 }

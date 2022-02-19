@@ -18,13 +18,14 @@ import java.util.List;
 public class LambdaTest {
 
     public static List<Person> personList() {
-        List<Person> personList = new ArrayList<>();
-        personList.add(new Person("小明", 20));
-        personList.add(new Person("小红", 15));
-        personList.add(new Person("小李", 25));
-        personList.add(new Person("小陈", 30));
-        personList.add(new Person("小王", 27));
-        return personList;
+        //List<Person> personList = new ArrayList<>();
+        //personList.add(new Person("小明", 20));
+        //personList.add(new Person("小红", 15));
+        //personList.add(new Person("小李", 25));
+        //personList.add(new Person("小陈", 30));
+        //personList.add(new Person("小王", 27));
+        //return personList;
+        return null;
     }
 
     public static Person getPerson(Person person) {

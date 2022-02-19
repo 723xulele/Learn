@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @Date: 2021/09/15/16:07
@@ -29,9 +30,16 @@ public class FileController {
 
     @PostMapping("/upload")
     @ApiOperation(value = "文件上传")
-    public String upload(@RequestParam("file") MultipartFile multipartFile) {
+    public String upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
        return fileUploadService.uploadFile(multipartFile);
+    }
+
+    @PostMapping("/testFile")
+    @ApiOperation(value = "测试文件")
+    public void testFile() throws IOException {
+
+         fileUploadService.testFile();
     }
 
 
