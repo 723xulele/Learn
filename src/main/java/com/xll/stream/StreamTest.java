@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xll.model.po.Person;
 import com.xll.model.po.Warn;
 import com.xll.utils.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -21,6 +22,7 @@ import static java.util.stream.Collectors.toList;
  * @Date: 2021/08/17/14:19
  * @Description: 学习Stream的基础使用
  */
+@Slf4j
 public class StreamTest {
 
     public static  List<Person> personList(){
@@ -326,8 +328,9 @@ public class StreamTest {
         }
         String string1 = "{\"contentId\":1,\"warnContent\":\"撞墙检测\"}";
         Warn warn = JSONObject.parseObject(string1, Warn.class);
+        log.info(warn.getWarnContent());
         System.out.println(warn.getWarnContent());
-        new ArrayList<>();
+
 
 
     }
