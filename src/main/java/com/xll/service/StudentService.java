@@ -15,4 +15,6 @@ public interface StudentService {
 
     //新增学生
     void addStudent(Student student);
+
+    Student getStudentById(Integer id);
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xll.mapper.UserLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xll.model.po.UserLog">
+        <id column="user_id" property="user_id" />
+        <result column="user_ip" property="user_ip" />
+        <result column="request_url" property="request_url" />
+        <result column="request_params" property="request_params" />
+        <result column="create_time" property="create_time" />
+    </resultMap>
+
+</mapper>

@@ -1,5 +1,6 @@
 package com.xll.controller;
 
+import com.xll.aop.UserLog;
 import com.xll.model.po.Student;
 import com.xll.service.StudentService;
 import io.swagger.annotations.Api;
@@ -23,14 +24,23 @@ public class StudentController {
 
 
     @GetMapping("/getAllStudent")
+    @UserLog
     @ApiOperation(value = "查询所有学生接口")
     public List<Student> getAllStudent() {
         return studentService.getAllStudent();
     }
 
+    @GetMapping("/getStudentById")
+    @UserLog
+    @ApiOperation(value = "根据ID查找学生")
+    public Student getAllStudentById(Integer id) {
+        return studentService.getStudentById(id);
+    }
+
     @PostMapping("/addStudent")
     @ApiOperation(value = "新增学生接口")
-    public void addStudent(@RequestBody(required = true) Student student) {
+    @UserLog
+    public void addStudent(@RequestBody Student student) {
        studentService.addStudent(student);
     }
 

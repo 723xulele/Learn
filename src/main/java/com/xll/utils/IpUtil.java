@@ -18,7 +18,7 @@ public class IpUtil {
 	 * @param request
 	 * @return
 	 */
-	private String getIpAddress(HttpServletRequest request) {
+	public static String getIpAddress(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
 		if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
 			// 多次反向代理后会有多个ip值，第一个ip才是真实ip
