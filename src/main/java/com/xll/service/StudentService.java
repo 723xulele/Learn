@@ -17,4 +17,6 @@ public interface StudentService {
     void addStudent(Student student);
 
     Student getStudentById(Integer id);
+
+    Student login(Integer id);
 }

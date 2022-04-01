@@ -44,4 +44,11 @@ public class StudentServiceImpl implements StudentService{
         qw.eq("id",id);
         return studentBaseService.getOne(qw);
     }
+
+    @Override
+    public Student login(Integer id) {
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("id",id);
+        return studentBaseService.getOne(qw);
+    }
 }
