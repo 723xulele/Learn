@@ -18,6 +18,39 @@ package com.xll.Thread;
  * 8. stop();强制结束当前线程 已过时
  * 9. sleep(long millTime): 让当前线程"睡眠"指定毫秒,在指定的时间内,当前线程是阻塞状态
  * 10. isAlive(): 判断当前线程是否还存活
+ *
+ *
+ * 线程的优先级
+ * 1. 优先级高的可能被优先执行 但不一定,只是概率高
+ * MAX_PRIORITY: 10
+ * MIN_PRIORITY: 10
+ * NORM_PRIORITY: 5 默认优先级
+ * 2. getPriority(): 获取当前线程的优先级
+ *    setPriority(int priority): 设置线程优先级
+ *    说明: 高优先级的线程要抢占低优先级线程cpu的执行权, 但只是从概率上讲,高优先级的线程高概率情况下被执行,但并不意味着高优先级的线程执行完以后,低优先级的线程才执行
  */
 public class ThreadMethod {
+
+    public static void main(String[] args) {
+        new thread1().run();
+        Thread.currentThread().setPriority(1);
+        for (int i = 0; i < 10; i++) {
+            if (i % 3 == 0) {
+                System.out.println(Thread.currentThread().getName() + "--" + Thread.currentThread().getPriority() + "--" + i);
+            }
+        }
+    }
+
+
+}
+
+class thread1 extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                System.out.println(getName() + "--" + getPriority() + "--" + i);
+            }
+        }
+    }
 }
