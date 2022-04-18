@@ -27,7 +27,13 @@ package com.xll.Thread;
  * NORM_PRIORITY: 5 默认优先级
  * 2. getPriority(): 获取当前线程的优先级
  *    setPriority(int priority): 设置线程优先级
- *    说明: 高优先级的线程要抢占低优先级线程cpu的执行权, 但只是从概率上讲,高优先级的线程高概率情况下被执行,但并不意味着高优先级的线程执行完以后,低优先级的线程才执行
+ *    说明: 高优先级的线程要抢占低优先级线程cpu的行权, 但只是从概率上讲,高优先级的线程高概率情况下被执行,但并不意味着高优先级的线程执行完以后,低优先级的线程才执行
+ *
+ *线程的几种状态:
+ * 新建 -> 就绪(调用start()) <---> 运行(获取或丢失cpu执行权) -> 死亡(执行完run(),调用stop(),出现error/Exception)
+ * 阻塞: 运行->阻塞 不是线程的最终状态; sleep()方法,join(),等待同步锁,wait(),suspend()挂起
+ *       阻塞 -> 就绪 -> 运行
+ *       阻塞 -> 就绪 sleep()时间到,join()结束,获取同步锁,notify()/notifyAll(),resume()取消挂起
  */
 public class ThreadMethod {
 
